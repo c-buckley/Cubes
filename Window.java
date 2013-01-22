@@ -1,4 +1,5 @@
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.glu.*;
@@ -37,12 +38,12 @@ public class Window {
 		
 	}
 	
-	public static void draw(Block bl, Block bl2, Block bl3) {
+	public static void draw(Player p, Block bl, Block bl2, Block bl3) {
 		// clear the screen and depth buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
-		GLU.gluLookAt(-30f, 60f, -30f,
-					  30f, 0f, 11f,
+		GLU.gluLookAt(p.location().x, p.location().y, p.location().z,
+					  11f, 11f, -11f,
 					  0f, 1f, 0f);
 		
 //		bl.render();
@@ -50,14 +51,34 @@ public class Window {
 		bl3.render();
 	}
 	
+	public static void input(Player player) {
+		Vector3f delta = new Vector3f();
+		if (Keyboard.isKeyDown(Keyboard.KEY_W))
+			delta.z = 0.5f;
+		else if (Keyboard.isKeyDown(Keyboard.KEY_S))
+			delta.z = -0.5f;
+		if (Keyboard.isKeyDown(Keyboard.KEY_A))
+			delta.x = -0.5f;
+		else if (Keyboard.isKeyDown(Keyboard.KEY_D))
+			delta.x = 0.5f;
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+			delta.y = 0.5f;
+		else if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+			delta.y = -0.5f;
+		
+		player.adjustLocation(delta);
+	}
+	
 	public static void main(String[] args) {
 		init();
+		Player player = new Player(new Vector3f(-60, 30, -60));
 		Block bl = new Block(new Vector3f(100f, 100f, 0f), new Vector3f(300f, 300f, 200f));
 		Block bl2 = new Block(new Vector3f(20f, 20f, 0f), new Vector3f(80f, 80f, 40f));
 		Block bl3 = new Block(new Vector3f(4f, 4f, -4f), new Vector3f(18f, 18f, -18f));
 		
 		while (!Display.isCloseRequested()) {
-			draw(bl, bl2, bl3);
+			input(player);
+			draw(player, bl, bl2, bl3);
 			Display.update();
 			Display.sync(60);
 		}
