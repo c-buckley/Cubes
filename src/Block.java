@@ -1,7 +1,7 @@
+// Cuboid.
+
 import static org.lwjgl.opengl.GL11.*;
-
 import java.util.Random;
-
 import org.lwjgl.util.vector.Vector3f;
 
 
@@ -10,6 +10,11 @@ public class Block {
 	private Vector3f bottomRight;
 	private Vector3f[] colors;
 	
+	// pre : Distance between topLeft and bottomRight components should be less
+	//       than 5.
+	// post: Creates a new block at specified location with side lengths equal
+	//       to the distance between Vector3f components. Side colors are
+	//       random.
 	public Block(Vector3f topLeft, Vector3f bottomRight) {
 		this.topLeft = topLeft;
 		this.bottomRight = bottomRight;
@@ -21,6 +26,7 @@ public class Block {
 		}
 	}
 	
+	// post: Renders the block.
 	public void draw() {
 		glBegin(GL_QUADS);
 			
