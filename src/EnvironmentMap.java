@@ -34,9 +34,9 @@ public class EnvironmentMap {
 	}
 	
 	public void createBlock() {
-		float x = (float)(Math.random()-0.5f) * mapSize*2;
+		float x = (float)(Math.random()-0.5f) * mapSize;
 		float y = (float)(Math.random()) * mapSize;
-		float z = (float)(Math.random()-0.5f) * mapSize*2;
+		float z = (float)(Math.random()-0.5f) * mapSize;
 		float dx = (float)Math.random() * 5;
 		float dy = (float)Math.random() * 5;
 		float dz = (float)Math.random() * 5;
