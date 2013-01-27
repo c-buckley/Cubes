@@ -8,7 +8,7 @@ import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector2f;
 
-
+//test
 public class Player {
 	
 	private Vector3f location;
