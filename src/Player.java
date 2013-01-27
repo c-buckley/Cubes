@@ -37,6 +37,7 @@ public class Player {
 		this.angles = angles;
 		this.sights = new Vector3f();
 		setSights();
+		Mouse.setGrabbed(true);
 	}
 	
 	// post: Returns the player's location.
@@ -52,9 +53,13 @@ public class Player {
 	// post: Updates player's game logic.
 	public void update() {
 		// turn
-		if (Mouse.isButtonDown(0)) {
-			angles.x -= 0.01f*Mouse.getDX();
-			angles.y += 0.01f*Mouse.getDY();
+		if (Mouse.isGrabbed()) {
+			angles.x += 0.01f*Mouse.getDX();
+			// conditionals stop camera from turning upside down
+			float dy = -0.01f*Mouse.getDY();
+			if (!(angles.y < 0.2f && dy < 0.0f) &&
+				!(angles.y > Math.PI - 0.2f && dy > 0.0f))
+				angles.y += dy;
 		}
 		
 		// move
@@ -82,8 +87,7 @@ public class Player {
 		setSights();
 		GLU.gluLookAt(location.x, location.y, location.z,
 						sights.x, sights.y, sights.z,
-						0f, 1f, 0f);
-		
+						0f, 1f, 0f);	
 	}
 	
 	// post: Updates the player's camera focus.

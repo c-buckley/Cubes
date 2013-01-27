@@ -1,6 +1,8 @@
 // Both the window and the main. To do: better organize this.
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.glu.*;
@@ -12,7 +14,7 @@ public class Window {
 	public static void init() {
 		try {
 			Display.setDisplayMode(new DisplayMode(640, 480));
-			Display.setTitle("Safety scissors.");
+			Display.setTitle("Esc to escape!");
 			Display.create();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -47,6 +49,10 @@ public class Window {
 	
 	public static void update(Player player) {
 		player.update();
+		if (Mouse.isButtonDown(0))
+			Mouse.setGrabbed(true);
+		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+			Mouse.setGrabbed(false);
 	}
 	
 	public static void main(String[] args) {
