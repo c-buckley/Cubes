@@ -1,4 +1,6 @@
-// The player.
+/**
+ * The player.
+ */
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -13,25 +15,33 @@ public class Player {
 	private Vector2f angles;
 	private Vector3f sights;
 	
-	// post: Creates a new player at (0, 1, 0).
-	// n.b.: THERE SHOULD ONLY BE ONE PLAYER.
+	/**
+	 * Creates a new player at (0, 1, 0). Note: THERE SHOULD ONLY BE ONE PLAYER.
+	 */
 	public Player() {
 		this(new Vector3f(0.0f, 1.0f, 0.0f));
 	}
 	
-	// pre : Location should be within the map.
-	// post: Creates a new player at <location>.
-	// n.b.: THERE SHOULD ONLY BE ONE PLAYER.
+	/**
+	 * Creates a new player at {@code location}. Note: THERE SHOULD ONLY BE ONE
+	 * PLAYER.
+	 * 
+	 * @param location Original location of the player. Should be within the map.
+	 */
 	public Player(Vector3f location) {
 		this(location, new Vector2f(0.0f, (float)(Math.PI/2)));
 	}
 	
-	// pre : Location should be within the map. Angles (phi, theta) in radians.
-	//       Phi is the angle from the x-direction. Theta is the angle from the
-	//       zenith (the y-direction).
-	// post: Creates a new player at <location> looking in the direction
-	//       specified by <angles>.
-	// n.b.: THERE SHOULD ONLY BE ONE PLAYER.
+	/**
+	 * Creates a new player at {@code location} looking in the direction
+	 * specified by {@code angles}. Note: THERE SHOULD ONLY BE ONE PLAYER.
+	 * 
+	 * @param location Original location of the player. Should be within the
+	 *        map.
+	 * @param angles Original direction of the player's camera. Angles (phi,
+	 *        theta) in radians. Phi is the angle from the x-direction. Theta
+	 *        is the angle from the zenith (the y-direction).
+	 */
 	public Player(Vector3f location, Vector2f angles) {
 		this.location = location;
 		this.angles = angles;
@@ -40,17 +50,25 @@ public class Player {
 		Mouse.setGrabbed(true);
 	}
 	
-	// post: Returns the player's location.
+	/**
+	 * Returns the player's location.
+	 * @return Returns the player's location.
+	 */
 	public Vector3f location() {
 		return location;
 	}
 	
-	// post: Returns the player's camera angle (phi, theta).
+	/**
+	 * Returns the player's camera angle.
+	 * @return Returns the player's camera angle (phi, theta).
+	 */
 	public Vector2f angles() {
 		return angles;
 	}
 	
-	// post: Updates player's game logic.
+	/**
+	 * Updates player's game logic.
+	 */
 	public void update() {
 		// turn
 		if (Mouse.isGrabbed()) {
@@ -82,7 +100,9 @@ public class Player {
 		System.out.println("Angles  : (" + (angles.x * 180 / Math.PI) % 360 + ", " + (angles.y * 180 / Math.PI) % 360 + ")");
 	}
 	
-	// post: Updates the player's camera.
+	/**
+	 * Updates the player's camera.
+	 */
 	public void look() {
 		setSights();
 		GLU.gluLookAt(location.x, location.y, location.z,
@@ -90,20 +110,27 @@ public class Player {
 						0f, 1f, 0f);	
 	}
 	
-	// post: Updates the player's camera focus.
+	/**
+	 * Updates the player's camera focus.
+	 */
 	private void setSights() {
 		sights.x = location.x + (float)(Math.sin(angles.y)*Math.cos(angles.x));
 		sights.y = location.y + (float)(Math.cos(angles.y));
 		sights.z = location.z + (float)(Math.sin(angles.y)*Math.sin(angles.x));
 	}
 	
-	// movement enums
+	/**
+	 * Enums for movement.
+	 */
 	private enum Move {
 		FORWARD, BACKWARD, LEFT, RIGHT, UP, DOWN;
 	}
 	
-	// pre : Move must be a valid Move.
-	// post: Moves the player.
+	/**
+	 * Moves the player.
+	 * 
+	 * @param move Move must be a valid move.
+	 */
 	private void move(Move move) {
 		if (move == Move.FORWARD) {
 			location.x += (float)(Math.sin(angles.y)*Math.cos(angles.x));

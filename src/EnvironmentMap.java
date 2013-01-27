@@ -1,4 +1,6 @@
-// Keeps track of the environment.
+/**
+ * Keeps track of the environment.
+ */
 
 import java.util.*;
 import org.lwjgl.util.vector.Vector3f;
@@ -9,13 +11,18 @@ public class EnvironmentMap {
 	private ArrayList<Block> blocks;
 	private Block cage;
 	
-	// post: Creates a new map, default size 50.
+	/**
+	 * Creates a new map, default size 50.
+	 */
 	public EnvironmentMap() {
 		this(50);
 	}
 	
-	// pre : MapSize should be greater than zero.
-	// post: Creates a new map with <mapSize> * 2 blocks.
+	/**
+	 * Creates a new map with {@code mapSize * 2} blocks.
+	 * 
+	 * @param mapSize Size of the map. Should be greater than zero.
+	 */
 	public EnvironmentMap(int mapSize) {
 		this.mapSize = mapSize;
 		this.blocks = new ArrayList<Block>();
@@ -29,7 +36,9 @@ public class EnvironmentMap {
 		}
 	}
 	
-	// post: Renders the environment.
+	/**
+	 * Renders the environment.
+	 */
 	public void draw() {
 		// draw ground
 		cage.draw();
@@ -39,7 +48,9 @@ public class EnvironmentMap {
 			bl.draw();
 	}
 	
-	// post: Creates a new block with side lengths 0-5 at a random location.
+	/**
+	 * Creates a new block with side lengths 0-5 at a random location.
+	 */
 	public void createBlock() {
 		float x = (float)(Math.random()-0.5f) * mapSize * 2;
 		float y = (float)(Math.random()) * mapSize * 2;
