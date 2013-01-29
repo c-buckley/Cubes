@@ -1,5 +1,9 @@
 // Both the window and the main. To do: better organize this.
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -29,7 +33,6 @@ public class Window {
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		
-		// initialize the shit I don't understand
 		glShadeModel(GL_SMOOTH);
 		glClearColor(1f, 1f, 1f, 0f);
 		glClearDepth(1.0f);
@@ -55,14 +58,16 @@ public class Window {
 			Mouse.setGrabbed(false);
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		init();
 		Player player = new Player();
 		EnvironmentMap environment = new EnvironmentMap();
+		Model m = OBJLoader.loadModel(new File("assets/person.obj"));
 		
 		while (!Display.isCloseRequested()) {
 			update(player);
 			draw(player, environment);
+			m.draw();
 			Display.update();
 			Display.sync(60);
 		}

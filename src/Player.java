@@ -8,7 +8,6 @@ import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector2f;
 
-//test
 public class Player {
 	
 	private Vector3f location;
@@ -95,9 +94,9 @@ public class Player {
 			move(Move.DOWN);
 		
 		// debug
-		System.out.println("Location: (" + location.x + ", " + location.y + ", " + location.z + ")");
-		System.out.println("Sights  : (" + sights.x + ", " + sights.y + ", " + sights.z + ")");
-		System.out.println("Angles  : (" + (angles.x * 180 / Math.PI) % 360 + ", " + (angles.y * 180 / Math.PI) % 360 + ")");
+//		System.out.println("Location: (" + location.x + ", " + location.y + ", " + location.z + ")");
+//		System.out.println("Sights  : (" + sights.x + ", " + sights.y + ", " + sights.z + ")");
+//		System.out.println("Angles  : (" + (angles.x * 180 / Math.PI) % 360 + ", " + (angles.y * 180 / Math.PI) % 360 + ")");
 	}
 	
 	/**
@@ -132,6 +131,8 @@ public class Player {
 	 * @param move Move must be a valid move.
 	 */
 	private void move(Move move) {
+		// horizontal movement is currently separate from vertical movement
+		// because floating will eventually be replaced with jumping
 		if (move == Move.FORWARD) {
 			location.x += (float)(Math.sin(angles.y)*Math.cos(angles.x));
 			location.z += (float)(Math.sin(angles.y)*Math.sin(angles.x));

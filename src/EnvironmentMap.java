@@ -12,10 +12,10 @@ public class EnvironmentMap {
 	private Block cage;
 	
 	/**
-	 * Creates a new map, default size 50.
+	 * Creates a new map, default size 30.
 	 */
 	public EnvironmentMap() {
-		this(50);
+		this(30);
 	}
 	
 	/**
