@@ -10,6 +10,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.glu.*;
+import org.lwjgl.util.vector.Vector3f;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -62,12 +63,12 @@ public class Window {
 		init();
 		Player player = new Player();
 		EnvironmentMap environment = new EnvironmentMap();
-		Model m = OBJLoader.loadModel(new File("assets/person.obj"));
+		Model m = OBJLoader.loadModel(new File("assets/sphere2.obj"));
 		
 		while (!Display.isCloseRequested()) {
 			update(player);
 			draw(player, environment);
-			m.draw();
+			m.draw(new Vector3f(0.0f, 1.0f, 0.0f));
 			Display.update();
 			Display.sync(60);
 		}
