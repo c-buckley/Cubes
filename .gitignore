@@ -48,7 +48,7 @@ local.properties
 *_p.c
 *.ilk
 *.meta
-*.obj
+
 *.pch
 *.pdb
 *.pgc
@@ -98,7 +98,7 @@ publish
 
 # Others
 [Bb]in
-[Oo]bj
+
 sql
 TestResults
 *.Cache
