@@ -3,7 +3,14 @@
  */
 
 import static org.lwjgl.opengl.GL11.*;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.Random;
+
+import org.lwjgl.opengl.ARBShaderObjects;
+import org.lwjgl.opengl.ARBVertexShader;
 import org.lwjgl.util.vector.Vector3f;
 
 

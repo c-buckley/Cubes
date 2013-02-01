@@ -2,6 +2,8 @@
  * The player.
  */
 
+import static org.lwjgl.opengl.GL11.*;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.glu.GLU;
@@ -13,6 +15,7 @@ public class Player {
 	private Vector3f location;
 	private Vector2f angles;
 	private Vector3f sights;
+	private float[] lightPosition;
 	
 	/**
 	 * Creates a new player at (0, 1, 0). Note: THERE SHOULD ONLY BE ONE PLAYER.
@@ -103,6 +106,7 @@ public class Player {
 	 * Updates the player's camera.
 	 */
 	public void look() {
+		setLight();
 		setSights();
 		GLU.gluLookAt(location.x, location.y, location.z,
 						sights.x, sights.y, sights.z,
@@ -116,6 +120,11 @@ public class Player {
 		sights.x = location.x + (float)(Math.sin(angles.y)*Math.cos(angles.x));
 		sights.y = location.y + (float)(Math.cos(angles.y));
 		sights.z = location.z + (float)(Math.sin(angles.y)*Math.sin(angles.x));
+	}
+	
+	private void setLight() {
+		lightPosition = new float[]{location.x, location.y, location.z, 1};
+		glLight(GL_LIGHT0, GL_POSITION, Window.asFlippedFloatBuffer(lightPosition));
 	}
 	
 	/**

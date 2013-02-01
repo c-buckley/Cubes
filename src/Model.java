@@ -23,10 +23,10 @@ public class Model {
     	glPushMatrix();
     	glTranslatef(loc.x, loc.y, loc.z);
     	
-    	glColor3f(0.0f, 0.0f, 0.0f);
-    	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    	glColor3f(0.2f, 0.1f, 0.2f);
+//    	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     	
-//    	glEnable(GL_CULL_FACE);
+    	glEnable(GL_CULL_FACE);
     	glCullFace(GL_BACK);
     	
     	glBegin(GL_TRIANGLES);

@@ -1,9 +1,9 @@
 // Both the window and the main. To do: better organize this.
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.nio.FloatBuffer;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -40,6 +40,13 @@ public class Window {
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+		
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0);
+		glLightModel(GL_LIGHT_MODEL_AMBIENT, Window.asFlippedFloatBuffer(new float[]{0.2f, 0.2f, 0.2f, 1f}));
+		glLight(GL_LIGHT0, GL_POSITION, Window.asFlippedFloatBuffer(new float[]{0, 0, 0, 1}));
+		glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 	}
 	
 	public static void draw(Player player, EnvironmentMap environment) {
@@ -53,6 +60,7 @@ public class Window {
 	
 	public static void update(Player player) {
 		player.update();
+		
 		if (Mouse.isButtonDown(0))
 			Mouse.setGrabbed(true);
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
@@ -68,11 +76,22 @@ public class Window {
 		while (!Display.isCloseRequested()) {
 			update(player);
 			draw(player, environment);
-			m.draw(new Vector3f(0.0f, 1.0f, 0.0f));
+			m.draw(new Vector3f(4.0f, 1.0f, 0.0f));
 			Display.update();
 			Display.sync(60);
 		}
 		Display.destroy();
 		System.exit(0);
 	}
+	
+    /**
+     * @param values the float values that are to be turned into a FloatBuffer
+     * @return a FloatBuffer readable to OpenGL (not to you!) containing values
+     */
+    public static FloatBuffer asFlippedFloatBuffer(float... values) {
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(values.length);
+        buffer.put(values);
+        buffer.flip();
+        return buffer;
+    }
 }
