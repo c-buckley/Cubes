@@ -8,23 +8,36 @@ public class Model {
     public List<Vector3f> vertices;
     public List<Vector3f> normals;
     public List<Face> faces;
+    
+    private boolean isLight;
+    private Vector3f location;
+    private Vector3f color;
 
     public Model() {
     	this.vertices = new ArrayList<Vector3f>();
     	this.normals = new ArrayList<Vector3f>();
     	this.faces = new ArrayList<Face>();
+    	
+    	this.isLight = false;
+    	this.location = new Vector3f();
+    	this.color = new Vector3f(0.4f, 0.4f, 0.3f);
     }
     
     public void draw() {
-    	draw(new Vector3f());
+    	draw(location);
     }
     
     public void draw(Vector3f loc) {
     	glPushMatrix();
     	glTranslatef(loc.x, loc.y, loc.z);
     	
-    	glColor3f(0.2f, 0.1f, 0.2f);
+    	glColor3f(color.x, color.y, color.z);
 //    	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    	
+    	if (isLight) {
+    		glEnable(GL_COLOR_MATERIAL);
+    		glColorMaterial(GL_FRONT, GL_EMISSION);
+    	}
     	
     	glEnable(GL_CULL_FACE);
     	glCullFace(GL_BACK);
@@ -49,6 +62,20 @@ public class Model {
 		glEnd();
     	
 		glDisable(GL_CULL_FACE);
+		if (isLight)
+			glDisable(GL_COLOR_MATERIAL);
 		glPopMatrix();
+    }
+    
+    public void setLight(boolean isLight) {
+    	this.isLight = isLight;
+    }
+    
+    public void setLocation(Vector3f loc) {
+    	this.location = loc;
+    }
+    
+    public void setColor(Vector3f color) {
+    	this.color = color;
     }
 }

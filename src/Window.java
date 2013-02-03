@@ -2,6 +2,7 @@
 
 import java.io.*;
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -15,8 +16,22 @@ import org.lwjgl.util.vector.Vector3f;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Window {
+	private Player player;
+	private EnvironmentMap environment;
+	private ArrayList<Model> models;
+	
+	public Window() throws FileNotFoundException, IOException {
+		this.init();
+		player = new Player();
+		environment = new EnvironmentMap();
+		models = new ArrayList<Model>();
+		models.add(OBJLoader.loadModel(new File("assets/mayantemple.obj")));
+		models.add(OBJLoader.loadModel(new File("assets/sphere2.obj")));
+		models.get(1).setLight(true);
+		models.get(1).setLocation(new Vector3f(0f, 8.2f, 0f));
+	}
 
-	public static void init() {
+	public void init() {
 		try {
 			Display.setDisplayMode(new DisplayMode(640, 480));
 			Display.setTitle("Esc to escape!");
@@ -41,24 +56,28 @@ public class Window {
 		glDepthFunc(GL_LEQUAL);
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		
+    	glEnable(GL_CULL_FACE);
+    	glCullFace(GL_BACK);
+		
 		glEnable(GL_LIGHTING);
 		glEnable(GL_LIGHT0);
 		glLightModel(GL_LIGHT_MODEL_AMBIENT, Window.asFlippedFloatBuffer(new float[]{0.2f, 0.2f, 0.2f, 1f}));
-		glLight(GL_LIGHT0, GL_POSITION, Window.asFlippedFloatBuffer(new float[]{0, 0, 0, 1}));
 		glEnable(GL_COLOR_MATERIAL);
-		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+		glColorMaterial(GL_FRONT, GL_DIFFUSE);
 	}
 	
-	public static void draw(Player player, EnvironmentMap environment) {
+	public void draw() {
 		// clear the screen and depth buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		
 		player.look();
 		environment.draw();
+		for (Model m : models)
+			m.draw();
 	}
 	
-	public static void update(Player player) {
+	public void update() {
 		player.update();
 		
 		if (Mouse.isButtonDown(0))
@@ -68,15 +87,11 @@ public class Window {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		init();
-		Player player = new Player();
-		EnvironmentMap environment = new EnvironmentMap();
-		Model m = OBJLoader.loadModel(new File("assets/sphere2.obj"));
+		Window w = new Window();
 		
 		while (!Display.isCloseRequested()) {
-			update(player);
-			draw(player, environment);
-			m.draw(new Vector3f(4.0f, 1.0f, 0.0f));
+			w.update();
+			w.draw();
 			Display.update();
 			Display.sync(60);
 		}

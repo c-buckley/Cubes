@@ -123,7 +123,7 @@ public class Player {
 	}
 	
 	private void setLight() {
-		lightPosition = new float[]{location.x, location.y, location.z, 1};
+		lightPosition = new float[]{location.x, location.y, location.z, 0.5f};
 		glLight(GL_LIGHT0, GL_POSITION, Window.asFlippedFloatBuffer(lightPosition));
 	}
 	

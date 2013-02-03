@@ -2,6 +2,8 @@
  * Keeps track of the environment.
  */
 
+
+import static org.lwjgl.opengl.GL11.*;
 import java.util.*;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -40,12 +42,17 @@ public class EnvironmentMap {
 	 * Renders the environment.
 	 */
 	public void draw() {
+		glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+		
 		// draw ground
 		cage.draw();
 		
 		// draw blocks
 		for (Block bl : blocks)
 			bl.draw();
+		
+		glDisable(GL_COLOR_MATERIAL);
 	}
 	
 	/**

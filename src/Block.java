@@ -42,6 +42,9 @@ public class Block {
 	 * Renders the block.
 	 */
 	public void draw() {
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+		
 		glBegin(GL_QUADS);
 			
 			// front
