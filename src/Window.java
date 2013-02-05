@@ -29,6 +29,8 @@ public class Window {
 		models.add(OBJLoader.loadModel(new File("assets/sphere2.obj")));
 		models.get(1).setLight(true);
 		models.get(1).setLocation(new Vector3f(0f, 8.2f, 0f));
+		models.add(OBJLoader.loadModel(new File("assets/homer.obj")));
+		models.get(2).setLocation(new Vector3f(-30f, 0f, 0f));
 	}
 
 	public void init() {
